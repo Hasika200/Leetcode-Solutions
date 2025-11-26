@@ -1,26 +1,25 @@
 class Solution {
 public:
-    int m,n;
     int M=1e9+7;
-    vector<vector<vector<int>>>t;
-    int solve(int i,int j,int currSum,vector<vector<int>>& grid, int k){
-        if(i>=m || j>=n){
-            return 0;
-        }
-        if(i==m-1 && j==n-1){
-            return (currSum+grid[i][j])%k==0;
-        }
-        if(t[i][j][currSum]!=-1){
-            return t[i][j][currSum];
-        }
-        int down=solve(i+1,j,(currSum+grid[i][j])%k,grid,k);
-        int right=solve(i,j+1,(currSum+grid[i][j])%k,grid,k);
-        return t[i][j][currSum]=(down+right)%M;
-    }
     int numberOfPaths(vector<vector<int>>& grid, int k) {
-        m=grid.size();
-        n=grid[0].size();
-        t.assign(m,vector<vector<int>>(n,vector<int>(k,-1)));
-        return solve(0,0,0,grid,k);
+        int m=grid.size();
+        int n=grid[0].size();
+        int t[m+1][n+1][k+1];
+        memset(t,0,sizeof(t));
+        for(int rem=0;rem<=k-1;rem++){
+            t[m-1][n-1][rem]=(rem+grid[m-1][n-1])%k==0;
+        }
+        for(int i=m-1;i>=0;i--){
+            for(int j=n-1;j>=0;j--){
+                for(int rem=0;rem<=k-1;rem++){
+                    if(i==m-1 && j==n-1) continue;
+                    int R=(rem+grid[i][j])%k;
+                    int down=t[i+1][j][R];
+                    int right=t[i][j+1][R];
+                    t[i][j][rem]=(down+right)%M;
+                }
+            }
+        }
+        return t[0][0][0];
     }
 };
