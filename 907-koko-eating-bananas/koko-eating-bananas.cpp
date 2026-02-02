@@ -3,7 +3,7 @@ public:
     long long calculate(vector<int>& piles, int hour){
         long long th=0;
         for(int i=0;i<piles.size();i++){
-            th+=(piles[i]+hour-1)/hour;
+             th+=(long long)ceil((double)piles[i]/hour); 
         }
         return th;
     }
