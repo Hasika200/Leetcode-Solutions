@@ -1,6 +1,6 @@
 class Solution {
 public:
-    bool possible(vector<int>& bloomDay,int day, int m, int k){
+    bool poss(vector<int>& bloomDay,int day, int m, int k){
         int cnt=0;
         int noofB=0;
         for(int i=0;i<bloomDay.size();i++){
@@ -22,7 +22,7 @@ public:
         int h=*max_element(bloomDay.begin(),bloomDay.end());
         while(l<=h){
             int mid=l+(h-l)/2;
-            if(possible(bloomDay,mid,m,k)){
+            if(poss(bloomDay,mid,m,k)){
                 h=mid-1;
             }
             else{
